@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../../UI/Card";
 import ExpenseItem from "./ExpenseItem";
 import "./Expenses.css";
-import { expenses } from "../../Constants/ExpenseData";
 
-function Expenses() {
+function Expenses({expenses}) {
+  
   return (
     <Card className="expenses">
       {expenses.map((expense) => (
