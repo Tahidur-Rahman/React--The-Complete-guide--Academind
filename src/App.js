@@ -16,13 +16,17 @@ function App() {
    setExpenses(expense => [...expense,e])
   }
 
+  const onChangeFilter  = e => {
+    console.log(e)
+  }
+
   return (
     <div className="App">
       <div>
         <h3>Expenses tracker App</h3>
       </div>
       <NewExpense addExpense={submitData}/>
-      <Expenses expenses={expenses} />
+      <Expenses expenses={expenses} onChangeFilter={onChangeFilter}/>
     </div>
   );
 }

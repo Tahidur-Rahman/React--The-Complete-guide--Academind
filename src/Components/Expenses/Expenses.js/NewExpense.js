@@ -15,8 +15,10 @@ function NewExpense({ addExpense }) {
       amount: amount,
       date: new Date(date),
     };
-
     addExpense(newExpense);
+    setDate("");
+    setTitle("");
+    setAmount("");
   };
 
   return (
