@@ -1,24 +1,37 @@
-import React, { useState } from "react";
-import Modal from "./Components/Modal";
-import UserForm from "./Components/UserForm";
-import Users from "./Components/Users";
+import React, { useState,useEffect } from 'react';
+
+import Login from './components/Login/Login';
+import Home from './components/Home/Home';
+import MainHeader from './components/MainHeader/MainHeader';
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [modalText,setModalText] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const addUser = (e) => setUsers((prev) => [...prev, e]);
-  const setModal = e => setShowModal(e)
-  const closeModal = e => setShowModal(e)
-  const setText = e => setModalText(e)
+  useEffect(() => {
+   const storedUserLoggedInfo = localStorage.getItem('isLoggedIn');
+   if(storedUserLoggedInfo === '1'){
+     setIsLoggedIn(true)
+   }
+  }, [])
+
+  const loginHandler = (email, password) => {
+    localStorage.setItem('isLoggedIn','1')
+    setIsLoggedIn(true);
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem('isLoggedIn')
+    setIsLoggedIn(false);
+  };
 
   return (
-    <div className="App">
-      <UserForm addUser={addUser} setModal={setModal} setText={setText}/>
-      <Users users={users} />
-      {showModal && <Modal modalText={modalText} closeModal={closeModal}/>}
-    </div>
+    <React.Fragment>
+      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <main>
+        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {isLoggedIn && <Home onLogout={logoutHandler} />}
+      </main>
+    </React.Fragment>
   );
 }
 
